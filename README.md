@@ -1,0 +1,2 @@
+# SwychrKycSDK
+Swychr KYC SDK
