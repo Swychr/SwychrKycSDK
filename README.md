@@ -1,128 +1,96 @@
-📄 Swychr KYC SDK (Flutter)
+# Verification Photo Upload for Flutter
 
-A Flutter package that enables seamless KYC verification flows including:
+A lightweight Flutter plugin that makes it easy to capture or pick photos for KYC, identity verification, or document upload flows.  
+Handles camera & gallery permissions automatically with clear messages.
 
-📸 Document capture
+## Features
 
-🧾 Document upload
+- Open camera or photo gallery
+- Automatic permission requests
+- Image compression
+- Simple one-line API
 
-🙂 Liveliness checks
+## Installation
 
-🔐 Secure API communication
+Add to your `pubspec.yaml`:
 
-This SDK handles the complete KYC experience with minimal setup by the developer.
-
-🚀 Installation
-
-Add the SDK to your app’s pubspec.yaml.
-
-From Pub.dev
+```yaml
 dependencies:
-  swychr_kyc_sdk: ^1.0.0
-
-From GitHub
-dependencies:
-  swychr_kyc_sdk:
-    git:
-      url: https://github.com/Swychr/SwychrKycSDK.git
-      ref: main
-
-
+  verification_photo_upload: ^1.0.0
 Then run:
-
-flutter pub get
-
-🛠 Platform Setup (REQUIRED)
-
-The SDK uses camera, gallery, and file storage.
-Each platform must include the following permissions.
-
-📱 iOS Setup
-1. Add Permissions to Info.plist
-
-Open ios/Runner/Info.plist and add:
-
-<key>NSCameraUsageDescription</key>
-<string>The camera is used to take and upload photos and images for verification.</string>
+Bashflutter pub get
+Required Permission Setup
+iOS – Info.plist
+Add these keys to ios/Runner/Info.plist:
+XML<key>NSCameraUsageDescription</key>
+<string>The camera is used to take and upload photos and image for verification.</string>
 
 <key>NSPhotoLibraryUsageDescription</key>
-<string>Allow access to photo library to upload photos and images for verification.</string>
+<string>Allow access to photo library to upload photos and image for verification</string>
 
+<!-- Recommended -->
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>The app needs to save the captured photo for verification.</string>
+iOS – Podfile (Required!)
+Open ios/Podfile and add this block inside the target 'Runner' section:
+Rubytarget 'Runner' do
+  use_frameworks!
+  use_modular_headers!
 
-These descriptions appear in the system permission prompts.
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-2. Add Required Flags in ios/Podfile
-
-Inside your Podfile, within the target 'Runner' do block:
-
-target.build_configurations.each do |config|
-  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-    '$(inherited)',
-
-    ## dart: PermissionGroup.camera
-    'PERMISSION_CAMERA=1',
-  ]
+  # ADD THIS EXACT BLOCK
+  target.build_configurations.each do |config|
+    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+      '$(inherited)',
+      ## dart: PermissionGroup.camera
+      'PERMISSION_CAMERA=1',
+      ## dart: PermissionGroup.photos (iOS) & storage (Android)
+      'PERMISSION_PHOTOS=1',
+      'PERMISSION_STORAGE=1'
+    ]
+  end
 end
-
-
-Then install pods:
-
-cd ios
-pod install
-cd ..
-
-🤖 Android Setup
-Add Permissions to AndroidManifest.xml
-
-Open android/app/src/main/AndroidManifest.xml and add these inside <manifest>:
-
+After saving, run:
+Bashcd ios
+pod install --repo-update
+Android – AndroidManifest.xml
+Add inside the <manifest> tag (outside <application>):
+XML<uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<uses-permission android:name="android.permission.CAMERA"/>
 
-
-NOTE:
-For Android 13+ (API 33+), consider adding:
-
+<!-- Recommended for Android 13+ -->
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+Usage Example
+Dartimport 'package:verification_photo_upload/verification_photo_upload.dart';
 
-🔑 Runtime Permissions (Recommended)
+Future<void> getVerificationPhoto() async {
+  try {
+    final image = await VerificationPhotoUpload.capture(
+      source: PhotoSource.camera, // or PhotoSource.gallery
+      title: "Take photo for verification",
+      maxWidth: 1200,
+      imageQuality: 90,
+    );
 
-This SDK requires camera and photo library/storage access at runtime.
-
-Install permission_handler:
-
-dependencies:
-  permission_handler: ^10.4.0
-
-
-Example:
-
-final status = await Permission.camera.request();
-if (!status.isGranted) {
-  // Show message or redirect to settings
+    if (image != null) {
+      // Upload or process the file
+      print("Photo path: ${image.path}");
+    }
+  } catch (e) {
+    print("Error or permission denied: $e");
+  }
 }
+Important Notes
 
-🧩 Usage Example
-import 'package:swychr_kyc_sdk/swychr_kyc_sdk.dart';
+Always test permissions on real devices
+iOS simulator sometimes skips permission dialogs
+For Android 13+ you can remove READ/WRITE_EXTERNAL_STORAGE if you only use READ_MEDIA_IMAGES
 
-SwychrKycScreen(
-  email: "user@example.com",
-  primaryColor: Colors.blue,
-  apiKey: "YOUR_API_KEY_HERE",
-);
+Support
+Found a bug or need help? Open an issue on the GitHub repository.
 
-
-Embed the screen in any page or trigger from a button:
-
-Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => SwychrKycScreen(
-      email: "user@example.com",
-      primaryColor: Colors.blue,
-      apiKey: "YOUR_API_KEY",
-    ),
-  ),
-);
+Ready for production verification flows – just install and go!
