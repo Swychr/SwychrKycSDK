@@ -432,7 +432,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
                         children: <Widget>[
                           RichText(
                             text: TextSpan(
-                                text: 'Enter Mobile Number',
+                                text: 'Enter DOB',
                                 style: TextStyle(
                                     fontSize: 15, color: LightColor.kPrimaryColor),
                                 children: [
