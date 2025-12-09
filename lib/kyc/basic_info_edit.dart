@@ -33,9 +33,11 @@ class BasicInfoEditScreen extends StatefulWidget {
   String? country;
   Color? primaryColor;
   String? api_key;
+  String? mobile_code;
+  String? country_iso_code;
 
 
-  BasicInfoEditScreen({Key? key, this.email, this.name, this.dob, this.phone_no, this.gender, this.address, this.street, this.postal_code, this.city, this.country, this.primaryColor, this.api_key})
+  BasicInfoEditScreen({Key? key, this.email, this.name, this.dob, this.phone_no, this.gender, this.address, this.street, this.postal_code, this.city, this.country, this.primaryColor, this.api_key, this.mobile_code, this.country_iso_code})
       : super(key: key);
   @override
   _PaytmState createState() => _PaytmState();
@@ -76,6 +78,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
   @override
   void initState() {
     super.initState();
+    print (widget.mobile_code);
     nameController.text = widget.name!;
     dobController.text= widget.dob!;
     phoneNo = widget.phone_no;
@@ -85,6 +88,9 @@ class _PaytmState extends State<BasicInfoEditScreen> {
     cityController!.text = widget.city!;
     zipController!.text = widget.postal_code!;
     countryController!.text = widget.country!;
+    country_iso_code = widget.country_iso_code!;
+    phone_code = widget.mobile_code!;
+
 
 
 
@@ -248,7 +254,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
 
                       ),
                       child: IntlPhoneField(
-
+                          initialValue: widget.phone_no,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
                             focusColor: Color(0xFF7B1FA2),
@@ -282,7 +288,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
 
                           ),
 
-                          initialCountryCode: 'IN',
+                          initialCountryCode: widget.country_iso_code,
 
                           onChanged: (phone) {
                             try {
@@ -345,6 +351,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: 24, top: 3, right: 24),
                     child:  DropdownButtonFormField2<String>(
+                      value: widget.gender,
                       isExpanded: true,
                       decoration: InputDecoration(
                         // Add Horizontal padding using menuItemStyleData.padding so it matches
@@ -432,7 +439,7 @@ class _PaytmState extends State<BasicInfoEditScreen> {
                         children: <Widget>[
                           RichText(
                             text: TextSpan(
-                                text: 'Enter DOB',
+                                text: 'Enter Dob',
                                 style: TextStyle(
                                     fontSize: 15, color: LightColor.kPrimaryColor),
                                 children: [

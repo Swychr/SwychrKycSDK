@@ -1,6 +1,4 @@
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
@@ -474,7 +472,7 @@ class _DeliveryProcesses extends StatelessWidget {
                       Spacer(),
                       InkWell(onTap: () async {
                         Navigator.push(context,MaterialPageRoute(builder: (context) => BasicInfoEditScreen(
-                          name: resp_data.kyc_attri!.name!, dob: resp_data.kyc_attri!.dob!, phone_no: resp_data.kyc_attri!.mobile!, gender: resp_data.kyc_attri!.gender!, address: resp_data.kyc_attri!.address!,  street: resp_data.kyc_attri!.street!,city: resp_data.kyc_attri!.city!, postal_code: resp_data.kyc_attri!.postal_code!, country: resp_data.kyc_attri!.country!, email: email, primaryColor: primaryColor, api_key: api_key
+                          name: resp_data.kyc_attri!.name!, dob: resp_data.kyc_attri!.dob!, phone_no: resp_data.kyc_attri!.mobile!, gender: resp_data.kyc_attri!.gender!, address: resp_data.kyc_attri!.address!,  street: resp_data.kyc_attri!.street!,city: resp_data.kyc_attri!.city!, postal_code: resp_data.kyc_attri!.postal_code!, country: resp_data.kyc_attri!.country!, email: email, primaryColor: primaryColor, api_key: api_key, mobile_code: resp_data.kyc_attri!.mobile_code!, country_iso_code:  resp_data.kyc_attri!.country_iso_code!
                         )));
                       }, child:Container(
                           height: 30,

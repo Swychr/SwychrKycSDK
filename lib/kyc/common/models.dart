@@ -44,10 +44,12 @@ class KycStatsAttritbute {
   String? step_3_status;
   String? final_status;
   String? remarks;
+  String? mobile_code;
+  String? country_iso_code;
 
 
 
-  KycStatsAttritbute({this.user_id, this.name, this.dob,  this.mobile,   this.gender, this.address, this.street, this.city, this.postal_code, this.country, this.id_proof_type, this.id_proof_no, this.id_proof_expiry_date, this.id_proof_url, this.livelyness_img, this.livelyness_score, this.step_1_status, this.step_2_status, this.step_3_status, this.final_status, this.remarks, });
+  KycStatsAttritbute({this.user_id, this.name, this.dob,  this.mobile,   this.gender, this.address, this.street, this.city, this.postal_code, this.country, this.id_proof_type, this.id_proof_no, this.id_proof_expiry_date, this.id_proof_url, this.livelyness_img, this.livelyness_score, this.step_1_status, this.step_2_status, this.step_3_status, this.final_status, this.remarks, this.mobile_code, this.country_iso_code});
 
   factory KycStatsAttritbute.fromJson(Map<String, dynamic> json) {
     return KycStatsAttritbute(
@@ -72,6 +74,8 @@ class KycStatsAttritbute {
       step_3_status: json['step_3_status'],
       final_status:json['final_status'],
       remarks:json['remarks'],
+      mobile_code: json['mobile_code'],
+      country_iso_code: json['country_iso_code']
 
 
 
@@ -106,6 +110,8 @@ class KycStatsAttritbute {
     data['step_3_status'] = this.step_3_status;
     data['final_status']= this.final_status;
     data['remarks'] = this.remarks;
+    data['mobile_code'] = this.mobile_code;
+    data['country_iso_code'] = this.country_iso_code;
 
     return data;
   }
